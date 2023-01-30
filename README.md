@@ -1,46 +1,320 @@
-# Getting Started with Create React App
+# Built-in types props type
+//string, number, boolean, null, undefine
+## App.tsx
+```ts
+import User from './components/User';
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+function App() {
+  return (
+    <div className="App">
+      <User name='Anamul' age={34} isRegistered={true} />
+    </div>
+  );
+}
 
-## Available Scripts
+export default App;
+```
+## User.tsx
+```ts
+import React from "react";
 
-In the project directory, you can run:
+const User = (props: { name: string; age: number; isRegistered: boolean }) => {
+  return (
+    <div>
+      <p>
+        I am {props.name}. I am {props.age} years old and I am{" "}
+        {props.isRegistered ? "Registerd" : "not registered"} Person
+      </p>
+    </div>
+  );
+};
 
-### `npm start`
+export default User;
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+//By variable
+import { type } from "os";
+import React from "react";
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+type UserProps = { name: string; age: number; isRegistered: boolean }
 
-### `npm test`
+const User = (props:UserProps ) => {
+  return (
+    <div>
+      <p>
+        I am {props.name}. I am {props.age} years old and I am{" "}
+        {props.isRegistered ? "Registerd" : "not registered"} Person
+      </p>
+    </div>
+  );
+};
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+export default User;
 
-### `npm run build`
+// By destructuring
+import React from "react";
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+type UserProps = { name: string; age: number; isRegistered: boolean }
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+const User = ({name, age, isRegistered}:UserProps ) => {
+  return (
+    <div>
+      <p>
+        I am {name}. I am {age} years old and I am{" "}
+        {isRegistered ? "Registerd" : "not registered"} Person
+      </p>
+    </div>
+  );
+};
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+export default User;
+```
 
-### `npm run eject`
+# Array type props
+## App.tsx
+```ts
+import React from 'react';
+import './App.css';
+import User from './components/User';
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+//let lang = ["Bangla", "English"]
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+function App() {
+  return (
+    <div className="App">
+      <User lang ={["Bangla", "English"]} />
+    </div>
+  );
+}
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+export default App;
+```
+## User.tsx
+```ts
+import React from "react";
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+type UserProps = { lang:string[] }
 
-## Learn More
+const User = ({lang}:UserProps ) => {
+    
+  return (
+    <div>
+     {
+         lang.map((language, index)=>{
+            return <p key={index}>{language}</p>
+          })
+     }
+    </div>
+  );
+};
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+export default User;
+```
+# Object type props
+## App.tsx
+```js
+import React from 'react';
+import './App.css';
+import User from './components/User';
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+let user1 = {name:"Anamul", age:34, isRegistered:true}
+
+function App() {
+  return (
+    <div className="App">
+      <User user={user1}  />
+    </div>
+  );
+}
+
+export default App;
+```
+## User.tsx
+```ts
+import React from "react";
+
+type UserProps = {
+  user: {
+    name: string;
+    age: number;
+    isRegistered: boolean;
+  };
+};
+
+const User = ({ user }: UserProps) => {
+  return (
+    <div>
+      <p> {user.name}</p>
+      <p> {user.age}</p>
+      <p> {user.isRegistered ? "Registered": "Not Registered"}</p>
+    </div>
+  );
+};
+
+export default User;
+```
+# Array object type props
+## App.tsx
+```ts
+import React from "react";
+import "./App.css";
+import User from "./components/User";
+
+let users = [
+  { name: "Anamul", age: 34, isRegistered: true },
+  { name: "Mamun", age: 35, isRegistered: false },
+];
+
+function App() {
+  return (
+    <div className="App">
+      <User user={users} />
+    </div>
+  );
+}
+
+export default App;
+```
+## User.tsx
+```ts
+import React from "react";
+
+type UserProps = {
+  user: {
+    name: string;
+    age: number;
+    isRegistered: boolean;
+  }[];
+};
+
+const User = ({ user }: UserProps) => {
+  return (
+    <div>
+      {user.map((user, index) => {
+        const { name, age, isRegistered } = user;
+        return (
+          <div key={index}>
+            <p>{name}</p>
+            <p>{age}</p>
+            <p>{isRegistered ? "Registered" : "Not Registered"}</p>
+          </div>
+        );
+      })}
+    </div>
+  );
+};
+
+export default User;
+```
+# union types props
+## App.tsx
+```js
+import React from "react";
+import "./App.css";
+import User from "./components/User";
+
+function App() {
+  return (
+    <div className="App">
+      <User status={"success"} />
+    </div>
+  );
+}
+export default App;
+```
+## User.tsx
+```ts
+import React from "react";
+
+type UserProps = {
+  status:"success"|"error"|"loading"
+};
+
+const User = ({ status }: UserProps) => {
+    if(status==="error"){
+        return <p>Error!</p>
+    }else if(status==="loading"){
+       return  <p>Loading....</p>
+    }
+  return (
+    <div>
+     <p>Successful!</p>
+    </div>
+  );
+};
+
+export default User;
+```
+# Children props type
+
+> ***ReactNode***
+In the context of React, a ReactNode is a type that represents any possible React element, such as a JSX element, a string, or a number. It can be used as a type for a variable or a property in a component, to indicate that it can contain any type of element that can be rendered by React. It is an alias for the React.ReactNode type.
+
+## Parents.tsx
+```ts
+import React from "react";
+import "./App.css";
+import Button from "./components/Button";
+
+
+function App() {
+  return (
+    <div className="App">
+      <Button>Click Me</Button>
+    </div>
+  );
+}
+
+export default App
+```
+
+
+## Children.tsx
+```ts
+import React from 'react'
+
+const Button = (props:{children:React.ReactNode}) => {
+  return (
+    <button>{props.children}</button>
+  )
+}
+
+export default Button
+```
+# style props
+## App.tsx
+```ts
+import React from "react";
+import "./App.css";
+import Button from "./components/Button";
+
+const btnStyle = {
+  backgroundColor:"blue",
+  color:"white"
+}
+
+function App() {
+  return (
+    <div className="App">
+      <Button buttonStyle={btnStyle} />
+    </div>
+  );
+}
+
+export default App;
+```
+## Button.tsx
+```ts
+import React from 'react'
+
+type btnStyleProps = {
+  buttonStyle :React.CSSProperties
+}
+
+const Button = (props:btnStyleProps) => {
+  return (
+    <button style={props.buttonStyle}>Click Me</button>
+  )
+}
+
+export default Button
+```
