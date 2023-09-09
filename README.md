@@ -1,165 +1,32 @@
-| No  | Subject                                                                                     |
+<a name='top'></a>
+| No | Subject |
 | --- | ------------------------------------------------------------------------------------------- |
-| 1.  | [Create react app with typescript with vite](#Create-react-app-with-typescript-with-vite)   |
-| 1.  | [Event props - onClick](#onClick)                                                           |
-| 1.  | [Event - How to use onClick event without passing props?](#onClick-without-passing-props)   |
-| 1.  | [Event props - onChange](#onChange)                                                         |
-| 1.  | [Event - How to use onChange event without passing props?](#onChange-without-passing-props) |
-| 1.  | [Style props](#style-props)                                                                 |
+| 1. | [Create react app with typescript with vite](#Create-react-app-with-typescript-with-vite) |
+| 2. | [Built-in types props type](#Built-in-types-props-type) |
+| 3. | [Array type props](#Array-type-props) |
+| 4. | [Object type props](#Object-type-props) |
+| 5. | [Array object type props](#Array-object-type-props) |
+| 6. | [union types props](#union-types-props) |
+| 7. | [Style props](#style-props) |
+| 8. | [Children props type](#Children-props-type) |
+| 9. | [Event props - onClick](#onClick) |
+| 10. | [Event - How to use onClick event without passing props?](#onClick-without-passing-props) |
+| 11. | [Event props - onChange](#onChange) |
+| 12. | [Event - How to use onChange event without passing props?](#onChange-without-passing-props) |
 
 ### Create react app with typescript with vite
 
 ---
 
+<a name='Create-react-app-with-typescript-with-vite'></a>
+
 ```js
 npm init vite@latest
 ```
 
-<a name='onClick'></a>
+[Go to top:arrow_up: ](#top)
 
-### Event props - onClick
-
----
-
-_**Pass simple onClick Props:**_
-
-```js
-//App.tsx
-<Button handleClick={() => console.log("Button Clicked!")} />;
-
-//Button.tsx
-type ButtonProps = {
-  handleClick: () => void,
-};
-
-const Button = (props: ButtonProps) => {
-  return (
-    <div>
-      <button onClick={props.handleClick}>Click Me</button>
-    </div>
-  );
-};
-
-export default Button;
-```
-
-_**Pass event and data:**_
-
-```tsx
-//App.tsx
-<Button
-  handleClick={(event, id) => console.log("Button Clicked!", event, id)}
-/>;
-
-//Button.tsx
-type ButtonProps = {
-  handleClick: (event: React.MouseEvent<HTMLButtonElement>, id: number) => void;
-};
-
-const Button = (props: ButtonProps) => {
-  return (
-    <div>
-      <button onClick={(event) => props.handleClick(event, 1002)}>
-        Click Me
-      </button>
-    </div>
-  );
-};
-
-export default Button;
-```
-
-<a name='onClick-without-passing-props'></a>
-
-## How to use onClick event without passing props?
-
----
-
-```js
-const Button = () => {
-  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
-    event?.preventDefault();
-    console.log("Clicked!", event);
-  };
-  return (
-    <div>
-      <button onClick={handleClick}>Click Me</button>
-    </div>
-  );
-};
-
-export default Button;
-```
-
-<a name='onChange'></a>
-
-### Event props - onChange
-
----
-
-```tsx
-//App.tsx
-<Input value="" handleChange={(event) => console.log(event.target.value)} />;
-
-//Input.tsx
-type InputProps = {
-  value: string;
-  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-};
-
-const Input = (props: InputProps) => {
-  return (
-    <div>
-      <input type="text" value={props.value} onChange={props.handleChange} />
-    </div>
-  );
-};
-
-export default Input;
-```
-
-<a name='onChange-without-passing-props'></a>
-
-## How to use onChange event without passing props?
-
----
-
-```js
-const Input = () => {
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    console.log(event.target.value);
-  };
-  return (
-    <div>
-      <input type="text" onChange={handleChange} />
-    </div>
-  );
-};
-
-export default Input;
-```
-
-## Style props
-
----
-
-```tsx
-//App.tsx
-<Container styles={{ color: "red" }} />;
-
-//Container.tsx
-type ContainerProps = {
-  styles: React.CSSProperties;
-};
-
-const Container = (props: ContainerProps) => {
-  return <div style={props.styles}>Container</div>;
-};
-
-export default Container;
-```
-
-///////
+<a name='Built-in-types-props-type'></a>
 
 # Built-in types props type
 
@@ -237,6 +104,9 @@ const User = ({ name, age, isRegistered }: UserProps) => {
 export default User;
 ```
 
+[Go to top:arrow_up: ](#top)
+<a name='Array-type-props'></a>
+
 # Array type props
 
 ## App.tsx
@@ -278,6 +148,9 @@ const User = ({ lang }: UserProps) => {
 
 export default User;
 ```
+
+[Go to top:arrow_up: ](#top)
+<a name='Object-type-props'></a>
 
 # Object type props
 
@@ -326,6 +199,9 @@ const User = ({ user }: UserProps) => {
 
 export default User;
 ```
+
+[Go to top:arrow_up: ](#top)
+<a name='Array-object-type props'></a>
 
 # Array object type props
 
@@ -385,6 +261,9 @@ const User = ({ user }: UserProps) => {
 export default User;
 ```
 
+[Go to top:arrow_up: ](#top)
+<a name='union-types-props'></a>
+
 # union types props
 
 ## App.tsx
@@ -429,6 +308,9 @@ const User = ({ status }: UserProps) => {
 export default User;
 ```
 
+[Go to top:arrow_up: ](#top)
+<a name='Children-props-type'></a>
+
 # Children props type
 
 > **_ReactNode_**
@@ -463,6 +345,9 @@ const Button = (props: { children: React.ReactNode }) => {
 
 export default Button;
 ```
+
+[Go to top:arrow_up: ](#top)
+<a name='style-props'></a>
 
 # style props
 
@@ -504,3 +389,133 @@ const Button = (props: btnStyleProps) => {
 
 export default Button;
 ```
+
+[Go to top:arrow_up: ](#top)
+<a name='onClick'></a>
+
+### Event props - onClick
+
+---
+
+_**Pass simple onClick Props:**_
+
+```js
+//App.tsx
+<Button handleClick={() => console.log("Button Clicked!")} />;
+
+//Button.tsx
+type ButtonProps = {
+  handleClick: () => void,
+};
+
+const Button = (props: ButtonProps) => {
+  return (
+    <div>
+      <button onClick={props.handleClick}>Click Me</button>
+    </div>
+  );
+};
+
+export default Button;
+```
+
+_**Pass event and data:**_
+
+```tsx
+//App.tsx
+<Button
+  handleClick={(event, id) => console.log("Button Clicked!", event, id)}
+/>;
+
+//Button.tsx
+type ButtonProps = {
+  handleClick: (event: React.MouseEvent<HTMLButtonElement>, id: number) => void;
+};
+
+const Button = (props: ButtonProps) => {
+  return (
+    <div>
+      <button onClick={(event) => props.handleClick(event, 1002)}>
+        Click Me
+      </button>
+    </div>
+  );
+};
+
+export default Button;
+```
+
+[Go to top:arrow_up: ](#top)
+<a name='onClick-without-passing-props'></a>
+
+## How to use onClick event without passing props?
+
+---
+
+```js
+const Button = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event?.preventDefault();
+    console.log("Clicked!", event);
+  };
+  return (
+    <div>
+      <button onClick={handleClick}>Click Me</button>
+    </div>
+  );
+};
+
+export default Button;
+```
+
+[Go to top:arrow_up: ](#top)
+<a name='onChange'></a>
+
+### Event props - onChange
+
+---
+
+```tsx
+//App.tsx
+<Input value="" handleChange={(event) => console.log(event.target.value)} />;
+
+//Input.tsx
+type InputProps = {
+  value: string;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+const Input = (props: InputProps) => {
+  return (
+    <div>
+      <input type="text" value={props.value} onChange={props.handleChange} />
+    </div>
+  );
+};
+
+export default Input;
+```
+
+[Go to top:arrow_up: ](#top)
+<a name='onChange-without-passing-props'></a>
+
+## How to use onChange event without passing props?
+
+---
+
+```js
+const Input = () => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
+  };
+  return (
+    <div>
+      <input type="text" onChange={handleChange} />
+    </div>
+  );
+};
+
+export default Input;
+```
+
+[Go to top:arrow_up: ](#top)
