@@ -1,20 +1,188 @@
+| No  | Subject                                                                                     |
+| --- | ------------------------------------------------------------------------------------------- |
+| 1.  | [Create react app with typescript with vite](#Create-react-app-with-typescript-with-vite)   |
+| 1.  | [Event props - onClick](#onClick)                                                           |
+| 1.  | [Event - How to use onClick event without passing props?](#onClick-without-passing-props)   |
+| 1.  | [Event props - onChange](#onChange)                                                         |
+| 1.  | [Event - How to use onChange event without passing props?](#onChange-without-passing-props) |
+| 1.  | [Style props](#style-props)                                                                 |
+
+### Create react app with typescript with vite
+
+---
+
+```js
+npm init vite@latest
+```
+
+<a name='onClick'></a>
+
+### Event props - onClick
+
+---
+
+_**Pass simple onClick Props:**_
+
+```js
+//App.tsx
+<Button handleClick={() => console.log("Button Clicked!")} />;
+
+//Button.tsx
+type ButtonProps = {
+  handleClick: () => void,
+};
+
+const Button = (props: ButtonProps) => {
+  return (
+    <div>
+      <button onClick={props.handleClick}>Click Me</button>
+    </div>
+  );
+};
+
+export default Button;
+```
+
+_**Pass event and data:**_
+
+```tsx
+//App.tsx
+<Button
+  handleClick={(event, id) => console.log("Button Clicked!", event, id)}
+/>;
+
+//Button.tsx
+type ButtonProps = {
+  handleClick: (event: React.MouseEvent<HTMLButtonElement>, id: number) => void;
+};
+
+const Button = (props: ButtonProps) => {
+  return (
+    <div>
+      <button onClick={(event) => props.handleClick(event, 1002)}>
+        Click Me
+      </button>
+    </div>
+  );
+};
+
+export default Button;
+```
+
+<a name='onClick-without-passing-props'></a>
+
+## How to use onClick event without passing props?
+
+---
+
+```js
+const Button = () => {
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    event?.preventDefault();
+    console.log("Clicked!", event);
+  };
+  return (
+    <div>
+      <button onClick={handleClick}>Click Me</button>
+    </div>
+  );
+};
+
+export default Button;
+```
+
+<a name='onChange'></a>
+
+### Event props - onChange
+
+---
+
+```tsx
+//App.tsx
+<Input value="" handleChange={(event) => console.log(event.target.value)} />;
+
+//Input.tsx
+type InputProps = {
+  value: string;
+  handleChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+};
+
+const Input = (props: InputProps) => {
+  return (
+    <div>
+      <input type="text" value={props.value} onChange={props.handleChange} />
+    </div>
+  );
+};
+
+export default Input;
+```
+
+<a name='onChange-without-passing-props'></a>
+
+## How to use onChange event without passing props?
+
+---
+
+```js
+const Input = () => {
+  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(event.target.value);
+  };
+  return (
+    <div>
+      <input type="text" onChange={handleChange} />
+    </div>
+  );
+};
+
+export default Input;
+```
+
+## Style props
+
+---
+
+```tsx
+//App.tsx
+<Container styles={{ color: "red" }} />;
+
+//Container.tsx
+type ContainerProps = {
+  styles: React.CSSProperties;
+};
+
+const Container = (props: ContainerProps) => {
+  return <div style={props.styles}>Container</div>;
+};
+
+export default Container;
+```
+
+///////
+
 # Built-in types props type
+
 //string, number, boolean, null, undefine
+
 ## App.tsx
+
 ```ts
-import User from './components/User';
+import User from "./components/User";
 
 function App() {
   return (
     <div className="App">
-      <User name='Anamul' age={34} isRegistered={true} />
+      <User name="Anamul" age={34} isRegistered={true} />
     </div>
   );
 }
 
 export default App;
 ```
+
 ## User.tsx
+
 ```ts
 import React from "react";
 
@@ -35,9 +203,9 @@ export default User;
 import { type } from "os";
 import React from "react";
 
-type UserProps = { name: string; age: number; isRegistered: boolean }
+type UserProps = { name: string; age: number; isRegistered: boolean };
 
-const User = (props:UserProps ) => {
+const User = (props: UserProps) => {
   return (
     <div>
       <p>
@@ -53,9 +221,9 @@ export default User;
 // By destructuring
 import React from "react";
 
-type UserProps = { name: string; age: number; isRegistered: boolean }
+type UserProps = { name: string; age: number; isRegistered: boolean };
 
-const User = ({name, age, isRegistered}:UserProps ) => {
+const User = ({ name, age, isRegistered }: UserProps) => {
   return (
     <div>
       <p>
@@ -70,65 +238,71 @@ export default User;
 ```
 
 # Array type props
+
 ## App.tsx
+
 ```ts
-import React from 'react';
-import './App.css';
-import User from './components/User';
+import React from "react";
+import "./App.css";
+import User from "./components/User";
 
 //let lang = ["Bangla", "English"]
 
 function App() {
   return (
     <div className="App">
-      <User lang ={["Bangla", "English"]} />
+      <User lang={["Bangla", "English"]} />
     </div>
   );
 }
 
 export default App;
 ```
+
 ## User.tsx
+
 ```ts
 import React from "react";
 
-type UserProps = { lang:string[] }
+type UserProps = { lang: string[] };
 
-const User = ({lang}:UserProps ) => {
-    
+const User = ({ lang }: UserProps) => {
   return (
     <div>
-     {
-         lang.map((language, index)=>{
-            return <p key={index}>{language}</p>
-          })
-     }
+      {lang.map((language, index) => {
+        return <p key={index}>{language}</p>;
+      })}
     </div>
   );
 };
 
 export default User;
 ```
-# Object type props
-## App.tsx
-```js
-import React from 'react';
-import './App.css';
-import User from './components/User';
 
-let user1 = {name:"Anamul", age:34, isRegistered:true}
+# Object type props
+
+## App.tsx
+
+```js
+import React from "react";
+import "./App.css";
+import User from "./components/User";
+
+let user1 = { name: "Anamul", age: 34, isRegistered: true };
 
 function App() {
   return (
     <div className="App">
-      <User user={user1}  />
+      <User user={user1} />
     </div>
   );
 }
 
 export default App;
 ```
+
 ## User.tsx
+
 ```ts
 import React from "react";
 
@@ -145,15 +319,18 @@ const User = ({ user }: UserProps) => {
     <div>
       <p> {user.name}</p>
       <p> {user.age}</p>
-      <p> {user.isRegistered ? "Registered": "Not Registered"}</p>
+      <p> {user.isRegistered ? "Registered" : "Not Registered"}</p>
     </div>
   );
 };
 
 export default User;
 ```
+
 # Array object type props
+
 ## App.tsx
+
 ```ts
 import React from "react";
 import "./App.css";
@@ -174,7 +351,9 @@ function App() {
 
 export default App;
 ```
+
 ## User.tsx
+
 ```ts
 import React from "react";
 
@@ -205,8 +384,11 @@ const User = ({ user }: UserProps) => {
 
 export default User;
 ```
+
 # union types props
+
 ## App.tsx
+
 ```js
 import React from "react";
 import "./App.css";
@@ -221,40 +403,43 @@ function App() {
 }
 export default App;
 ```
+
 ## User.tsx
+
 ```ts
 import React from "react";
 
 type UserProps = {
-  status:"success"|"error"|"loading"
+  status: "success" | "error" | "loading";
 };
 
 const User = ({ status }: UserProps) => {
-    if(status==="error"){
-        return <p>Error!</p>
-    }else if(status==="loading"){
-       return  <p>Loading....</p>
-    }
+  if (status === "error") {
+    return <p>Error!</p>;
+  } else if (status === "loading") {
+    return <p>Loading....</p>;
+  }
   return (
     <div>
-     <p>Successful!</p>
+      <p>Successful!</p>
     </div>
   );
 };
 
 export default User;
 ```
+
 # Children props type
 
-> ***ReactNode***
-In the context of React, a ReactNode is a type that represents any possible React element, such as a JSX element, a string, or a number. It can be used as a type for a variable or a property in a component, to indicate that it can contain any type of element that can be rendered by React. It is an alias for the React.ReactNode type.
+> **_ReactNode_**
+> In the context of React, a ReactNode is a type that represents any possible React element, such as a JSX element, a string, or a number. It can be used as a type for a variable or a property in a component, to indicate that it can contain any type of element that can be rendered by React. It is an alias for the React.ReactNode type.
 
 ## Parents.tsx
+
 ```ts
 import React from "react";
 import "./App.css";
 import Button from "./components/Button";
-
 
 function App() {
   return (
@@ -264,33 +449,34 @@ function App() {
   );
 }
 
-export default App
+export default App;
 ```
-
 
 ## Children.tsx
+
 ```ts
-import React from 'react'
+import React from "react";
 
-const Button = (props:{children:React.ReactNode}) => {
-  return (
-    <button>{props.children}</button>
-  )
-}
+const Button = (props: { children: React.ReactNode }) => {
+  return <button>{props.children}</button>;
+};
 
-export default Button
+export default Button;
 ```
+
 # style props
+
 ## App.tsx
+
 ```ts
 import React from "react";
 import "./App.css";
 import Button from "./components/Button";
 
 const btnStyle = {
-  backgroundColor:"blue",
-  color:"white"
-}
+  backgroundColor: "blue",
+  color: "white",
+};
 
 function App() {
   return (
@@ -302,19 +488,19 @@ function App() {
 
 export default App;
 ```
+
 ## Button.tsx
+
 ```ts
-import React from 'react'
+import React from "react";
 
 type btnStyleProps = {
-  buttonStyle :React.CSSProperties
-}
+  buttonStyle: React.CSSProperties;
+};
 
-const Button = (props:btnStyleProps) => {
-  return (
-    <button style={props.buttonStyle}>Click Me</button>
-  )
-}
+const Button = (props: btnStyleProps) => {
+  return <button style={props.buttonStyle}>Click Me</button>;
+};
 
-export default Button
+export default Button;
 ```
